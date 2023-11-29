@@ -1,7 +1,7 @@
 //import 'dart:collection';
 //import 'dart:js_interop';
 
-import 'dart:convert';
+//import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
@@ -13,9 +13,9 @@ import 'package:flutter/foundation.dart';
 //import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:anagram_maker/words.dart';
+//import 'package:anagram_maker/words.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
+//import 'package:provider/provider.dart';
 
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -29,7 +29,7 @@ int numInterstitialLoadAttempts = 0;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  print("main RETURNING $kIsWeb");
+  //print("main RETURNING $kIsWeb");
   if (kIsWeb == false) {
     var testDevices = <String>[];
     if (Platform.isAndroid) {
@@ -43,7 +43,7 @@ Future<void> main() async {
         testDeviceIds: testDevices,
       ));
   } else {
-    print("main NOT SHOWING AD");
+    //print("main NOT SHOWING AD");
   }
   runApp(MyApp());
 }
@@ -210,7 +210,7 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> showPopup(BuildContext context, String message) async {
-    print("showPopup called");
+    //print("showPopup called");
     return showDialog<void>(
       context: context,
       barrierDismissible:
@@ -242,7 +242,6 @@ class MyHomePageState extends State<MyHomePage> {
     List<String> uniqueLetters =
         (Set<String>.from(inputWord.toLowerCase().split("").toList())).toList();
     uniqueLetters.sort();
-    String uniqueLettersString = uniqueLetters.join("");
     foundWords = [];
     String formattedWord = "";
     Map<String, String> dicWords = {};
@@ -250,7 +249,7 @@ class MyHomePageState extends State<MyHomePage> {
     List<String> getLetters = [];
     List<String> lastInputSplit = inputWord.toLowerCase().split("");
     bool isFound = true;
-    print("uniqueLetters = ${json.encode(uniqueLetters)}");
+    //print("uniqueLetters = ${json.encode(uniqueLetters)}");
     for (int i = 0; i < uniqueLetters.length; i++) {
       dicWords = MyHomePage().myDic[uniqueLetters[i]]!;
       for (String word in dicWords.keys) {
@@ -272,7 +271,7 @@ class MyHomePageState extends State<MyHomePage> {
             }
           }
           if (isFound == true) {
-            print("IS FOUND!");
+            //print("IS FOUND!");
           }
           if (isFound == true && getLetters.isEmpty) {
             formattedWord = word.substring(0, inputWord.length).toUpperCase() +
@@ -319,16 +318,16 @@ class MyHomePageState extends State<MyHomePage> {
           random.nextInt(1000) < MyApp().ofThousandShowAd; //EXACTLY HALF.
     }
     if (isShowAd) {
-      print("makeAnagrams showInterstitialAd CALLING...");
+      //print("makeAnagrams showInterstitialAd CALLING...");
       MyHomePageState().showInterstitialAd();
     } else {
       isLoading = true;
       showProgress(context, 'Making anagrams..');
       await Future.delayed(Duration(milliseconds: 300));
-      print("makeAnagrams called inpt = ${inputController.text}");
-      print(inputController.text);
+      //print("makeAnagrams called inpt = ${inputController.text}");
+      //print(inputController.text);
       lastInput = inputController.text;
-      print("isMultipleWords = $isMultipleWords");
+      //print("isMultipleWords = $isMultipleWords");
       List<dynamic> foundWords = [];
       if (isMultipleWords == false) {
         foundWords = getWords(lastInput);
@@ -376,11 +375,11 @@ class MyHomePageState extends State<MyHomePage> {
         List<String> findWordSplit = [];
         List<String> getLetters = [];
         List<String> lastInputSplit = lastInput.toLowerCase().split("");
-        print("lastInputSplit = $lastInputSplit");
+        //print("lastInputSplit = $lastInputSplit");
         bool isFound = true;
         bool isFoundAll = true;
         String formattedWord = "";
-        print("uniqueLetters = ${json.encode(uniqueLetters)}");
+        //print("uniqueLetters = ${json.encode(uniqueLetters)}");
         for (int i = 0; i < uniqueLetters.length; i++) {
           dicWords = MyHomePage().myDic[uniqueLetters[i]]!;
           for (String word in dicWords.keys) {
@@ -414,24 +413,20 @@ class MyHomePageState extends State<MyHomePage> {
             }
           }
         }
-        for (int n in numsList.keys) {
-          print("numsList ($n) count = ${numsList[n]?.length}");
-        }
         final stopwatch = Stopwatch();
         for (int i = 1; i <= maxWords; i++) {
           numLetsMax = (numLetters / i).ceil();
           numLetsMin = (numLetters / i).floor();
           countMaxDiv = numLetters % i;
           countMinDiv = i - countMaxDiv;
-          print(
-              "LOOP numLetters = $numLetters, #words = $i, countMaxDiv = $countMaxDiv, countMinDiv = $countMaxDiv, combosDone = $combosDone");
+          //print("LOOP numLetters = $numLetters, #words = $i, countMaxDiv = $countMaxDiv, countMinDiv = $countMaxDiv, combosDone = $combosDone");
           isDo = true;
           if (combosDone.contains(i) || combosDone.contains(rem)) {
             isDo = false;
           }
-          print("LOOP isDo = $isDo, i = $i, combosDone = $combosDone");
+          //print("LOOP isDo = $isDo, i = $i, combosDone = $combosDone");
           if (isDo == true) {
-            print("LOOP DOING REM = $rem");
+            //print("LOOP DOING REM = $rem");
             combosDone.add(i);
             if (rem != 0) {
               combosDone.add(rem);
@@ -446,7 +441,7 @@ class MyHomePageState extends State<MyHomePage> {
               for (int k = 0; k < lastInputSplit.length; k++) {
                 getLetters.add(lastInputSplit[k]);
               }
-              print("LOOP i=$i, getLetters = $getLetters");
+              //print("LOOP i=$i, getLetters = $getLetters");
 
               isFound = true;
               isFoundAll = true;
@@ -454,10 +449,9 @@ class MyHomePageState extends State<MyHomePage> {
               wordsAdd = [];
               if (countMaxDiv > 0) {
                 countRemoveA = numLetsMax * countMaxDiv;
-                print("countRemoveA = $countRemoveA");
+                //print("countRemoveA = $countRemoveA");
                 for (int j = 0; j < countMaxDiv; j++) {
-                  print(
-                      "LOOP countMaxDiv = $countMaxDiv, numsList[i]!.length = ${numsList[numLetsMax]!.length}");
+                  //print("LOOP countMaxDiv = $countMaxDiv, numsList[i]!.length = ${numsList[numLetsMax]!.length}");
                   for (int k = 0; k < numsList[numLetsMax]!.length; k++) {
                     //LOOP WORDS(LENGTH i)
                     findWordSplit = numsList[numLetsMax]![k]["word"]
@@ -488,13 +482,11 @@ class MyHomePageState extends State<MyHomePage> {
                   isFoundAll = false;
                 }
               }
-              print(
-                  "LOOP DOING REMAINDER, getLetters = $getLetters, numLetsMax = $numLetsMax, numLetsMin = $numLetsMin");
+              //print("LOOP DOING REMAINDER, getLetters = $getLetters, numLetsMax = $numLetsMax, numLetsMin = $numLetsMin");
               if (isFoundAll == true && countMinDiv > 0) {
                 countRemoveB = numLetsMin * countMinDiv;
                 for (int j = 0; j < countMinDiv; j++) {
-                  print(
-                      "LOOP countMaxDiv = $countMinDiv, numsList[numLetsMin]!.length = ${numsList[numLetsMin]!.length}");
+                  //print("LOOP countMaxDiv = $countMinDiv, numsList[numLetsMin]!.length = ${numsList[numLetsMin]!.length}");
                   for (int r = 0; r < numsList[numLetsMin]!.length; r++) {
                     findWordSplit = numsList[numLetsMin]![r]["word"]
                         .toLowerCase()
@@ -508,7 +500,7 @@ class MyHomePageState extends State<MyHomePage> {
                       }
                     }
                     if (isFound == true) {
-                      print("LOOP isFound TRUE!");
+                      //print("LOOP isFound TRUE!");
                       for (int f = 0; f < numLetsMin; f++) {
                         getLetters.remove(findWordSplit[f]);
                         countRemoveB--;
@@ -525,7 +517,7 @@ class MyHomePageState extends State<MyHomePage> {
                   isFoundAll = false;
                 }
               }
-              print("LOOP wordsAdd = $wordsAdd");
+              //print("LOOP wordsAdd = $wordsAdd");
               if (isFoundAll == true && getLetters.isEmpty) {
                 //REMOVE WORDS FROM numsList:
                 for (int w = 0; w < wordsAdd.length; w++) {
@@ -543,14 +535,13 @@ class MyHomePageState extends State<MyHomePage> {
               }
             } //END WHILE LOOP
             stopwatch.stop();
-            print("while loop time = ${stopwatch.elapsedMilliseconds}");
+            //print("while loop time = ${stopwatch.elapsedMilliseconds}");
           } //END isDo
         } //END LOOP NUMBER WORDS
         foundWords.add(wordsMatched);
       }
 
-      print(
-          "LOOP NOT SHOWING AD,lastInput = $lastInput, foundWords.length = ${foundWords.length}");
+      //print("LOOP NOT SHOWING AD,lastInput = $lastInput, foundWords.length = ${foundWords.length}");
       hideProgress(context);
       Navigator.push(
           context,
@@ -560,12 +551,6 @@ class MyHomePageState extends State<MyHomePage> {
                   lastInput: lastInput,
                   words: foundWords)));
     }
-  }
-
-  String formatWord(myWord) {
-    var worspl = myWord.toString().toLowerCase().split("").toList();
-    String formattedWord = "";
-    return formattedWord;
   }
 
   static final AdRequest request = AdRequest(
@@ -580,25 +565,25 @@ class MyHomePageState extends State<MyHomePage> {
   );
 
   void createInterstitialAd() {
-    print("createInterstitialAd interstitialAd CALLED.");
+    //print("createInterstitialAd interstitialAd CALLED.");
 
     var appId = Platform.isAndroid
         ? 'ca-app-pub-8514966468184377/2341919859'
         : 'ca-app-pub-8514966468184377/5883541243';
-    print("Using appId: $appId kDebugMode = $kDebugMode");
+    //print("Using appId: $appId kDebugMode = $kDebugMode");
     InterstitialAd.load(
         adUnitId: appId,
         request: request,
         adLoadCallback: InterstitialAdLoadCallback(
           onAdLoaded: (InterstitialAd ad) {
-            print('My InterstitialAd $ad loaded');
+            //print('My InterstitialAd $ad loaded');
             interstitialAd = ad;
             numInterstitialLoadAttempts = 0;
             interstitialAd!.setImmersiveMode(true);
-            print("interstitialAd == null ? : ${interstitialAd == null}");
+            //print("interstitialAd == null ? : ${interstitialAd == null}");
           },
           onAdFailedToLoad: (LoadAdError error) {
-            print('interstitialAd failed to load: $error.');
+            //print('interstitialAd failed to load: $error.');
             numInterstitialLoadAttempts += 1;
             interstitialAd = null;
             if (numInterstitialLoadAttempts < maxFailedLoadAttempts) {
@@ -609,33 +594,30 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   void showInterstitialAd() {
-    print("showInterstitialAd called");
+    //print("showInterstitialAd called");
     if (interstitialAd == null) {
-      print('Warning: attempt to show interstitialAd before loaded.');
+      //print('Warning: attempt to show interstitialAd before loaded.');
       return;
     }
-    print(
-        "showInterstitialAd called, CALLING interstitialAd!.fullScreenContentCallback!!!");
+    //print("showInterstitialAd called, CALLING interstitialAd!.fullScreenContentCallback!!!");
     interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-      onAdShowedFullScreenContent: (InterstitialAd ad) =>
-          print('interstitialAd onAdShowedFullScreenContent.'),
+      //onAdShowedFullScreenContent: (InterstitialAd ad) =>
+      //print('interstitialAd onAdShowedFullScreenContent.'),
       onAdDismissedFullScreenContent: (InterstitialAd ad) {
-        print('$ad interstitialAd onAdDismissedFullScreenContent.');
+        //print('$ad interstitialAd onAdDismissedFullScreenContent.');
         ad.dispose();
-        print(
-            'interstitialAd onAdDismissedFullScreenContent Calling createInterstitialAd again');
+        //print('interstitialAd onAdDismissedFullScreenContent Calling createInterstitialAd again');
         createInterstitialAd();
       },
       onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
-        print('$ad interstitialAd onAdFailedToShowFullScreenContent: $error');
+        //print('$ad interstitialAd onAdFailedToShowFullScreenContent: $error');
         ad.dispose();
-        print(
-            'interstitialAd onAdFailedToShowFullScreenContent Calling createInterstitialAd again');
+        //print('interstitialAd onAdFailedToShowFullScreenContent Calling createInterstitialAd again');
         createInterstitialAd();
       },
     );
     interstitialAd!.show();
-    print("SETTING interstitialAd = null!!");
+    //print("SETTING interstitialAd = null!!");
     interstitialAd = null;
   }
 
@@ -643,7 +625,7 @@ class MyHomePageState extends State<MyHomePage> {
   void dispose() {
     super.dispose();
     if (kIsWeb == false) {
-      print("DISPOSING interstitialAd !!!");
+      //print("DISPOSING interstitialAd !!!");
       interstitialAd?.dispose();
     }
   }
@@ -657,16 +639,16 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   setMultipleWords(isMultiple) {
-    print("setShowTable SET isShow = $isMultiple");
+    //print("setShowTable SET isShow = $isMultiple");
     setState(() {
       isMultipleWords = isMultiple; // == false ? true : false;
-      print("setShowTable SET isMultipleWords = $isMultipleWords");
+      //print("setShowTable SET isMultipleWords = $isMultipleWords");
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context); // ← Add this.
+    //final theme = Theme.of(context); // ← Add this.
     return Scaffold(
       body: Row(
         children: [
@@ -693,7 +675,7 @@ class MyHomePageState extends State<MyHomePage> {
                                 border: OutlineInputBorder(),
                                 hintText: 'Enter letters(no spaces)',
                               ),
-                              keyboardType: TextInputType.number,
+                              keyboardType: TextInputType.text,
                               inputFormatters: <TextInputFormatter>[
                                 FilteringTextInputFormatter.allow(onlyLetters)
                               ],
@@ -772,7 +754,7 @@ class MyHomePageState extends State<MyHomePage> {
                                 //}
                                 //await Future.delayed(Duration(seconds: 1), () {
                                 // Code to be executed after the delay
-                                print("Delayed action executed!");
+                                //print("Delayed action executed!");
                                 makeAnagrams(context);
                                 //});
                               },
@@ -920,11 +902,11 @@ class MyPopup extends StatelessWidget {
             Random random = Random();
             var isShowAd = random.nextInt(1000) < MyApp().ofThousandShowAd;
             if (isShowAd) {
-              print("Selected Menu makeAnagrams showInterstitialAd CALLING...");
+              //print("Selected Menu makeAnagrams showInterstitialAd CALLING...");
               MyHomePageState().showInterstitialAd();
             }
           } else {
-            print("NOT SHOWING AD");
+            //print("NOT SHOWING AD");
           }
         },
         itemBuilder: (BuildContext context) {

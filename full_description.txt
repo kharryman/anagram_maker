@@ -1,0 +1,13 @@
+    Anagram Maker is a memory tool that can be used to remember an unordered list of words by creating one or more words representing the first letters of each word. For example, 'THE PLAZA PAD' can be used to remember the first 11 and most important Ionian philosophers:
+  1. Thales
+  2. Heraclitus
+  3. Empedocles
+  4. Protagoras
+  5. Leucippus
+  6. Anaximander
+  7. Zeno
+  8. Anaximenes
+  9. Parmenides
+  10. Anaxagoras
+  11. Democritus
+    It can take a word entered from the user and scramble its letters to create one or more words. The words are matched if they have the same beginning letters as the word entered.

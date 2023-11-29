@@ -1,4 +1,4 @@
-package com.example.anagram_maker
+package com.lfq.anagram_maker
 
 import io.flutter.embedding.android.FlutterActivity
 
