@@ -546,12 +546,12 @@ class MyHomePageState extends State<MyHomePage> {
 
   static final AdRequest request = AdRequest(
     keywords: <String>[
-      'anagrms',
+      'anagrams',
       'memorize lists',
       'improve memory',
       'rememer lists'
     ],
-    contentUrl: 'https://learnfactsquick.com/#/major_system_generator',
+    contentUrl: 'https://learnfactsquick.com/#/anagram_maker',
     nonPersonalizedAds: true,
   );
 
@@ -560,7 +560,7 @@ class MyHomePageState extends State<MyHomePage> {
 
     var appId = Platform.isAndroid
         ? 'ca-app-pub-8514966468184377/2341919859'
-        : 'ca-app-pub-8514966468184377/5883541243';
+        : 'ca-app-pub-8514966468184377/4214749627';
     //print("Using appId: $appId kDebugMode = $kDebugMode");
     InterstitialAd.load(
         adUnitId: appId,
