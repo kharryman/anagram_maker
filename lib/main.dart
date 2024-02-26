@@ -50,7 +50,7 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  final int ofThousandShowAd = 350;
+  final int ofThousandShowAds = 350;
 
   @override
   Widget build(BuildContext context) {
@@ -311,16 +311,7 @@ class MyHomePageState extends State<MyHomePage> {
       showPopup(context, "Please enter letters to make anagrams of.");
       return;
     }
-    var isShowAd = false;
-    if (kIsWeb == false) {
-      Random random = Random();
-      isShowAd =
-          random.nextInt(1000) < MyApp().ofThousandShowAd; //EXACTLY HALF.
-    }
-    if (isShowAd) {
-      //print("makeAnagrams showInterstitialAd CALLING...");
-      MyHomePageState().showInterstitialAd();
-    } else {
+    MyHomePageState().showInterstitialAd(() async {
       isLoading = true;
       showProgress(context, 'Making anagrams..');
       await Future.delayed(Duration(milliseconds: 300));
@@ -550,7 +541,7 @@ class MyHomePageState extends State<MyHomePage> {
                   isMultipleWords: isMultipleWords,
                   lastInput: lastInput,
                   words: foundWords)));
-    }
+    });
   }
 
   static final AdRequest request = AdRequest(
@@ -593,32 +584,39 @@ class MyHomePageState extends State<MyHomePage> {
         ));
   }
 
-  void showInterstitialAd() {
-    //print("showInterstitialAd called");
-    if (interstitialAd == null) {
-      //print('Warning: attempt to show interstitialAd before loaded.');
-      return;
+  void showInterstitialAd(Function callback) {
+    print("showInterstitialAd called");
+    if (kIsWeb == true) {
+      print('Web can not show ads.');
+      callback();
+    } else if (interstitialAd == null) {
+      print('Warning: attempt to show interstitialAd before loaded.');
+      callback();
+    } else {
+      Random random = Random();
+      var isShowAd = (random.nextInt(1000) < MyApp().ofThousandShowAds);
+      if (isShowAd != true) {
+        callback();
+      } else {
+        interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+          onAdShowedFullScreenContent: (InterstitialAd ad) =>
+              debugPrint('interstitialAd onAdShowedFullScreenContent.'),
+          onAdDismissedFullScreenContent: (InterstitialAd ad) {
+            ad.dispose();
+            createInterstitialAd();
+            callback();
+          },
+          onAdFailedToShowFullScreenContent:
+              (InterstitialAd ad, AdError error) {
+            ad.dispose();
+            createInterstitialAd();
+            callback();
+          },
+        );
+        interstitialAd!.show();
+        interstitialAd = null;
+      }
     }
-    //print("showInterstitialAd called, CALLING interstitialAd!.fullScreenContentCallback!!!");
-    interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-      //onAdShowedFullScreenContent: (InterstitialAd ad) =>
-      //print('interstitialAd onAdShowedFullScreenContent.'),
-      onAdDismissedFullScreenContent: (InterstitialAd ad) {
-        //print('$ad interstitialAd onAdDismissedFullScreenContent.');
-        ad.dispose();
-        //print('interstitialAd onAdDismissedFullScreenContent Calling createInterstitialAd again');
-        createInterstitialAd();
-      },
-      onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
-        //print('$ad interstitialAd onAdFailedToShowFullScreenContent: $error');
-        ad.dispose();
-        //print('interstitialAd onAdFailedToShowFullScreenContent Calling createInterstitialAd again');
-        createInterstitialAd();
-      },
-    );
-    interstitialAd!.show();
-    //print("SETTING interstitialAd = null!!");
-    interstitialAd = null;
   }
 
   @override
@@ -898,16 +896,8 @@ class MyPopup extends StatelessWidget {
         onSelected: (value) {
           //focusNode.unfocus();
           FocusScope.of(context).unfocus();
-          if (kIsWeb == false) {
-            Random random = Random();
-            var isShowAd = random.nextInt(1000) < MyApp().ofThousandShowAd;
-            if (isShowAd) {
-              //print("Selected Menu makeAnagrams showInterstitialAd CALLING...");
-              MyHomePageState().showInterstitialAd();
-            }
-          } else {
-            //print("NOT SHOWING AD");
-          }
+          //print("Selected Menu makeAnagrams showInterstitialAd CALLING...");
+          MyHomePageState().showInterstitialAd(() {});
         },
         itemBuilder: (BuildContext context) {
           return [
