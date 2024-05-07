@@ -1,0 +1,4 @@
+Includes English dictionary of 120,000 words and works offline.
+It has a fix to include shorter-length words so it can show more words.
+The app can be shown in other languages and return words in other languages while returning word definitions in the app's selected language.
+Languages include English, Spanish, French and German but later will automatically include other Romanized languages.
