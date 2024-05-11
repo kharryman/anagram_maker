@@ -48,6 +48,12 @@ InterstitialAd? interstitialAd;
 int numInterstitialLoadAttempts = 0;
 
 dynamic selectedAnagramLanguage;
+dynamic defaultLanguage = {
+  "LID": "8",
+  "name1": "English",
+  "name2": "LANGUAGE_ENGLISH",
+  "value": "en"
+};
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -78,12 +84,7 @@ Future<void> main() async {
 }
 
 class AppData extends ChangeNotifier {
-  dynamic selectedLanguage = {
-    "LID": "8",
-    "name1": "English",
-    "name2": "LANGUAGE_ENGLISH",
-    "value": "en"
-  };
+  dynamic selectedLanguage = defaultLanguage;
   Future<void> setLanguage(dynamic myLanguage) async {
     selectedLanguage = myLanguage;
     selectedAnagramLanguage = selectedLanguage;
@@ -355,19 +356,13 @@ class MyHomePageState extends State<MyHomePage> {
   bool isLanguagesLoading = true;
   List<String> myFilteredLanguages = [];
   bool isAllLanguages = true;
-  List<String> myList = ["..."];
+  List<String> myList = ["English(English)"];
 
   @override
   void initState() {
     super.initState();
     isLanguagesLoading = true;
-    dynamic selectedLanguage = {
-      "LID": "8",
-      "name1": "English",
-      "name2": "LANGUAGE_ENGLISH",
-      "value": "en"
-    };
-    selectedAnagramLanguage = selectedLanguage;
+    selectedAnagramLanguage = defaultLanguage;
     if (kIsWeb == false) {
       createInterstitialAd();
     }
@@ -389,13 +384,7 @@ class MyHomePageState extends State<MyHomePage> {
     if (isOnline == false) {
       setState(() {
         print("OFFLINE...");
-        dynamic selectedLanguage = {
-          "LID": "8",
-          "name1": "English",
-          "name2": "LANGUAGE_ENGLISH",
-          "value": "en"
-        };
-        selectedAnagramLanguage = selectedLanguage;
+        selectedAnagramLanguage = defaultLanguage;
         isLanguagesLoading = false;
         myList = ["English(English)"];
         myFilteredLanguages = ["English(English)"];
@@ -536,6 +525,9 @@ class MyHomePageState extends State<MyHomePage> {
     }).toList()));
     Set<String> uniqueMyList = myList.toSet();
     myList = uniqueMyList.toList();
+    if (myList.isEmpty) {
+      myList = ["English(English)"];
+    }
     dynamic myLanguage = List<dynamic>.from(languages
         .where(
             (dynamic lang) => lang["value"] == selectedAnagramLanguage["value"])
