@@ -33,10 +33,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:multiselect/multiselect.dart';
-import 'package:multiselect_dropdown_flutter/multiselect_dropdown_flutter.dart';
+import 'package:advanced_in_app_review/advanced_in_app_review.dart';
 
 import 'package:connectivity/connectivity.dart';
 
@@ -361,6 +360,14 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    if (kIsWeb == false) {
+      AdvancedInAppReview()
+          .setMinDaysBeforeRemind(7)
+          .setMinDaysAfterInstall(2)
+          .setMinLaunchTimes(2)
+          .setMinSecondsBeforeShowDialog(4)
+          .monitor();
+    }
     isLanguagesLoading = true;
     selectedAnagramLanguage = defaultLanguage;
     if (kIsWeb == false) {
